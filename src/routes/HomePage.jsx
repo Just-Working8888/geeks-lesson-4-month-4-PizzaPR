@@ -4,20 +4,63 @@ import PizzaBlock from '../components/PizzaBlock';
 import { useEffect, useState } from 'react';
 import Categories from '../components/Categories/Categories';
 import { Skeleton } from '../components/PizzaBlock/Sceleton';
+import Sort from '../components/Sort/Sort';
 
+
+
+
+const sorts = [{
+    id: 1,
+    value: 'rating',
+    name: 'популярности (DESC)'
+},
+{
+    id: 2,
+    value: '-rating',
+    name: 'популярности (ASC)'
+},
+{
+    id: 3,
+    value: 'price',
+    name: 'цене (DESC)'
+},
+{
+    id: 4,
+    value: '-price',
+    name: 'цене (ASC)'
+},
+{
+    id: 5,
+    value: 'title',
+    name: 'алфавиту (DESC)'
+},
+{
+    id: 6,
+    value: '-title',
+    name: 'алфавиту (ASC)'
+}
+]
 
 
 function HomePage() {
     const [data, setData] = useState(null)
     const [curentCategory, setCurentCategory] = useState(1)
+    const [curentSort, setCurentSort] = useState(0)
     const [loadings, setLoadings] = useState(false)
     function onChangeCategory(id) {
         setCurentCategory(id)
     }
 
     useEffect(() => {
-        const url = new URL('https://6367b246edc85dbc84d9ba5d.mockapi.io/products?sortBy=rating&order=desc&l=16&p=1');
+        const sortBy = sorts[curentSort].value.replace('-', '')
+        const order = sorts[curentSort].value.includes('-') ? 'asc' : 'desc'
+        console.log(sortBy);
+
+
+        const url = new URL('https://6367b246edc85dbc84d9ba5d.mockapi.io/products');
         url.searchParams.append('category', curentCategory);
+        url.searchParams.append('sortBy', sortBy);
+        url.searchParams.append('order', order);
         const fetchData = async () => {
             setLoadings(true)
             try {
@@ -34,7 +77,7 @@ function HomePage() {
             }
         }
         fetchData()
-    }, [curentCategory])
+    }, [curentCategory, curentSort])
 
     const pizzas = data?.map(item => <PizzaBlock item={item} />)
     const sceletons = [1, 2, 3, 4, 5, 6, 7, 8].map((item) => <Skeleton />)
@@ -92,31 +135,7 @@ function HomePage() {
                 <div class="container">
                     <div class="content__top">
                         <Categories onChangeCategory={onChangeCategory} value={curentCategory} />
-                        <div class="sort">
-                            <div class="sort__label">
-                                <svg
-                                    width="10"
-                                    height="6"
-                                    viewBox="0 0 10 6"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        d="M10 5C10 5.16927 9.93815 5.31576 9.81445 5.43945C9.69075 5.56315 9.54427 5.625 9.375 5.625H0.625C0.455729 5.625 0.309245 5.56315 0.185547 5.43945C0.061849 5.31576 0 5.16927 0 5C0 4.83073 0.061849 4.68424 0.185547 4.56055L4.56055 0.185547C4.68424 0.061849 4.83073 0 5 0C5.16927 0 5.31576 0.061849 5.43945 0.185547L9.81445 4.56055C9.93815 4.68424 10 4.83073 10 5Z"
-                                        fill="#2C2C2C"
-                                    />
-                                </svg>
-                                <b>Сортировка по:</b>
-                                <span>популярности</span>
-                            </div>
-                            <div class="sort__popup">
-                                <ul>
-                                    <li class="active">популярности</li>
-                                    <li>цене</li>
-                                    <li>алфавиту</li>
-                                </ul>
-                            </div>
-                        </div>
+                        <Sort setCurentSort={setCurentSort} curentSort={curentSort} sorts={sorts} />
                     </div>
                     <h2 class="content__title">Все пиццы</h2>
                     <div class="content__items">
