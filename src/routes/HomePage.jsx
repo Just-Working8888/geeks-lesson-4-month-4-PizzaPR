@@ -1,11 +1,11 @@
 import '../scss/app.scss';
 import logo from '../assets/img/pizza-logo.svg'
 import PizzaBlock from '../components/PizzaBlock';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Categories from '../components/Categories/Categories';
 import { Skeleton } from '../components/PizzaBlock/Sceleton';
 import Sort from '../components/Sort/Sort';
-
+import { ThemeContext } from '../App';
 
 
 
@@ -43,6 +43,8 @@ const sorts = [{
 
 
 function HomePage() {
+    const { isDarkMode, toggleTheme } = useContext(ThemeContext);
+    console.log(isDarkMode, 'fdsfsd');
     const [data, setData] = useState(null)
     const [curentCategory, setCurentCategory] = useState(1)
     const [curentSort, setCurentSort] = useState(0)
@@ -82,8 +84,14 @@ function HomePage() {
     const pizzas = data?.map(item => <PizzaBlock item={item} />)
     const sceletons = [1, 2, 3, 4, 5, 6, 7, 8].map((item) => <Skeleton />)
 
+
+
+
+    useEffect(() => {
+        document.body.style.background = isDarkMode ? 'linear-gradient(34deg, rgba(47, 86, 218, 1) 11%, rgba(22, 241, 190, 1) 82%)' : ""
+    }, [isDarkMode])
     return (
-        <div class="wrapper">
+        <div style={isDarkMode ? { background: '#892be25c' } : {}} class="wrapper" >
             <div class="header">
                 <div class="container">
                     <div class="header__logo">
@@ -93,6 +101,7 @@ function HomePage() {
                             <p>самая вкусная пицца во вселенной</p>
                         </div>
                     </div>
+                    <button onClick={() => toggleTheme()}>dark</button>
                     <div class="header__cart">
                         <a href="/cart.html" class="button button--cart">
                             <span>520 ₽</span>
@@ -145,7 +154,7 @@ function HomePage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 

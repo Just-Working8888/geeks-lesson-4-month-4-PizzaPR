@@ -7,6 +7,12 @@ body {
   background-color: $background;
 }
 
+
+.fdsf {
+  background: rgb(47, 86, 218);
+  background: linear-gradient(34deg, rgba(47, 86, 218, 1) 11%, rgba(22, 241, 190, 1) 82%);
+}
+
 .wrapper {
   width: calc(100vw - 100px);
   height: 100%;
@@ -14,9 +20,11 @@ body {
   margin: 50px auto;
   border-radius: 10px;
   max-width: 1400px;
+
 }
 
 .content {
+
   padding: 40px 0;
 
   &__title {
@@ -43,6 +51,7 @@ body {
   &--cart {
     max-width: 820px;
     margin: 90px auto;
+
     .content__title {
       margin: 0;
     }
@@ -67,6 +76,7 @@ body {
       width: 30px;
       height: 30px;
       margin-right: 10px;
+
       path {
         stroke: $black;
         stroke-width: 1.9;
@@ -99,6 +109,7 @@ body {
           stroke: darken($color: #b6b6b6, $amount: 50);
         }
       }
+
       span {
         color: darken($color: #b6b6b6, $amount: 50);
       }
@@ -119,6 +130,7 @@ body {
       width: 10%;
 
       img {
+
         width: 80px;
         height: 80px;
       }
@@ -199,6 +211,7 @@ body {
           height: 11.5px;
           position: relative;
         }
+
         &:hover,
         &:active {
           border-color: darken($color: $gray-line, $amount: 80);
@@ -256,6 +269,7 @@ body {
 
         svg {
           margin-right: 12px;
+
           path {
             fill: transparent;
             stroke-width: 2;

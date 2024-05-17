@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import { ThemeContext } from "../../App";
+
 function PizzaBlock({ item }) {
+    const { isDarkMode, toggleTheme } = useContext(ThemeContext);
+    console.log(isDarkMode ,'+++++');
     const { category, description, image, price, rating, size, title, _id } = item
     return (
         <div className="pizza-block">
