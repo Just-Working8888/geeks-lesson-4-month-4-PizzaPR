@@ -6,6 +6,7 @@ import Categories from '../components/Categories/Categories';
 import { Skeleton } from '../components/PizzaBlock/Sceleton';
 import Sort from '../components/Sort/Sort';
 import { ThemeContext } from '../App';
+import Pagination from '../components/Pagination/Pagination';
 
 
 
@@ -49,6 +50,7 @@ function HomePage() {
     const [curentCategory, setCurentCategory] = useState(1)
     const [curentSort, setCurentSort] = useState(0)
     const [loadings, setLoadings] = useState(false)
+    const [currentPage, setCurentPage] = useState(1)
     function onChangeCategory(id) {
         setCurentCategory(id)
     }
@@ -63,6 +65,8 @@ function HomePage() {
         url.searchParams.append('category', curentCategory);
         url.searchParams.append('sortBy', sortBy);
         url.searchParams.append('order', order);
+        url.searchParams.append('page', currentPage)
+        url.searchParams.append('limit', 4)
         const fetchData = async () => {
             setLoadings(true)
             try {
@@ -79,7 +83,7 @@ function HomePage() {
             }
         }
         fetchData()
-    }, [curentCategory, curentSort])
+    }, [curentCategory, curentSort, currentPage])
 
     const pizzas = data?.map(item => <PizzaBlock item={item} />)
     const sceletons = [1, 2, 3, 4, 5, 6, 7, 8].map((item) => <Skeleton />)
@@ -152,8 +156,10 @@ function HomePage() {
                             !loadings ? pizzas : sceletons
                         }
                     </div>
+                    <Pagination currentPage={currentPage} onPageChange={setCurentPage} />
                 </div>
             </div>
+
         </div >
     );
 }
