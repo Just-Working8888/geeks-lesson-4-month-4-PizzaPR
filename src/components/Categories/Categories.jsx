@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { ThemeContext } from "../../App";
 
 
 const filters = [{
@@ -32,12 +34,14 @@ const filters = [{
 }
 ]
 function Categories({ value, onChangeCategory }) {
+    const { isDarkMode } = useContext(ThemeContext);
+
     return (
         <div class="categories">
             <ul>
                 {
                     filters.map((item, index) =>
-                        <li className={value === item.id ? 'active' : ''} key={item.id} onClick={() => onChangeCategory(item.id)}>{item.label}</li>
+                        <li className={value === item.id ? 'active' : isDarkMode ? 'glass' : ''} key={item.id} onClick={() => onChangeCategory(item.id)}>{item.label}</li>
                     )
                 }
             </ul>
